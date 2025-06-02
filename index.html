@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Send Me a Message</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #fff;
+      color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 300px;
+    }
+    input, textarea, button {
+      margin: 8px 0;
+      padding: 8px;
+      font-size: 1rem;
+    }
+    button {
+      cursor: pointer;
+      background: black;
+      color: white;
+      border: none;
+    }
+    #contactBox {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #f9f9f9;
+      padding: 20px;
+      border: 1px solid #ccc;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+  <form id="messageForm" action="https://formspree.io/f/yourFormID" method="POST">
+    <input type="text" name="name" placeholder="Your name" required />
+    <textarea name="message" rows="4" placeholder="Your message" required></textarea>
+    <button type="button" onclick="showContactBox()">Next</button>
+  </form>
+
+  <div id="contactBox">
+    <label for="contact">Where can I contact you back?</label>
+    <input type="text" name="contact" id="contactInput" placeholder="Your email or phone" required />
+    <button onclick="submitForm()">Send</button>
+  </div>
+
+  <script>
+    function showContactBox() {
+      const form = document.getElementById('messageForm');
+      const contactBox = document.getElementById('contactBox');
+      contactBox.style.display = 'block';
+    }
+
+    function submitForm() {
+      const contactInput = document.getElementById('contactInput');
+      const form = document.getElementById('messageForm');
+      // Create a hidden input for contact info
+      const hiddenContact = document.createElement('input');
+      hiddenContact.type = 'hidden';
+      hiddenContact.name = 'contact';
+      hiddenContact.value = contactInput.value;
+      form.appendChild(hiddenContact);
+      form.submit();
+    }
+  </script>
+</body>
+</html>
